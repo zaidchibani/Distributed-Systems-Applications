@@ -31,6 +31,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -74,6 +75,32 @@ namespace org {
 namespace baeldung {
 namespace grpc {
 
+enum HelloRequest_Language : int {
+  HelloRequest_Language_EN = 0,
+  HelloRequest_Language_FR = 1,
+  HelloRequest_Language_AR = 2,
+  HelloRequest_Language_HelloRequest_Language_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  HelloRequest_Language_HelloRequest_Language_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool HelloRequest_Language_IsValid(int value);
+constexpr HelloRequest_Language HelloRequest_Language_Language_MIN = HelloRequest_Language_EN;
+constexpr HelloRequest_Language HelloRequest_Language_Language_MAX = HelloRequest_Language_AR;
+constexpr int HelloRequest_Language_Language_ARRAYSIZE = HelloRequest_Language_Language_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* HelloRequest_Language_descriptor();
+template<typename T>
+inline const std::string& HelloRequest_Language_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, HelloRequest_Language>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function HelloRequest_Language_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    HelloRequest_Language_descriptor(), enum_t_value);
+}
+inline bool HelloRequest_Language_Parse(
+    const std::string& name, HelloRequest_Language* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<HelloRequest_Language>(
+    HelloRequest_Language_descriptor(), name, value);
+}
 // ===================================================================
 
 class HelloRequest PROTOBUF_FINAL :
@@ -186,11 +213,44 @@ class HelloRequest PROTOBUF_FINAL :
 
   // nested types ----------------------------------------------------
 
+  typedef HelloRequest_Language Language;
+  static constexpr Language EN =
+    HelloRequest_Language_EN;
+  static constexpr Language FR =
+    HelloRequest_Language_FR;
+  static constexpr Language AR =
+    HelloRequest_Language_AR;
+  static inline bool Language_IsValid(int value) {
+    return HelloRequest_Language_IsValid(value);
+  }
+  static constexpr Language Language_MIN =
+    HelloRequest_Language_Language_MIN;
+  static constexpr Language Language_MAX =
+    HelloRequest_Language_Language_MAX;
+  static constexpr int Language_ARRAYSIZE =
+    HelloRequest_Language_Language_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  Language_descriptor() {
+    return HelloRequest_Language_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& Language_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, Language>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function Language_Name.");
+    return HelloRequest_Language_Name(enum_t_value);
+  }
+  static inline bool Language_Parse(const std::string& name,
+      Language* value) {
+    return HelloRequest_Language_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
   enum : int {
     kFirstNameFieldNumber = 1,
     kLastNameFieldNumber = 2,
+    kLangFieldNumber = 3,
   };
   // string firstName = 1;
   void clear_firstname();
@@ -242,6 +302,15 @@ class HelloRequest PROTOBUF_FINAL :
   std::string* _internal_mutable_lastname();
   public:
 
+  // .org.baeldung.grpc.HelloRequest.Language lang = 3;
+  void clear_lang();
+  ::org::baeldung::grpc::HelloRequest_Language lang() const;
+  void set_lang(::org::baeldung::grpc::HelloRequest_Language value);
+  private:
+  ::org::baeldung::grpc::HelloRequest_Language _internal_lang() const;
+  void _internal_set_lang(::org::baeldung::grpc::HelloRequest_Language value);
+  public:
+
   // @@protoc_insertion_point(class_scope:org.baeldung.grpc.HelloRequest)
  private:
   class _Internal;
@@ -251,6 +320,7 @@ class HelloRequest PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr firstname_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr lastname_;
+  int lang_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_hello_2eproto;
 };
@@ -580,6 +650,26 @@ inline void HelloRequest::unsafe_arena_set_allocated_lastname(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:org.baeldung.grpc.HelloRequest.lastName)
 }
 
+// .org.baeldung.grpc.HelloRequest.Language lang = 3;
+inline void HelloRequest::clear_lang() {
+  lang_ = 0;
+}
+inline ::org::baeldung::grpc::HelloRequest_Language HelloRequest::_internal_lang() const {
+  return static_cast< ::org::baeldung::grpc::HelloRequest_Language >(lang_);
+}
+inline ::org::baeldung::grpc::HelloRequest_Language HelloRequest::lang() const {
+  // @@protoc_insertion_point(field_get:org.baeldung.grpc.HelloRequest.lang)
+  return _internal_lang();
+}
+inline void HelloRequest::_internal_set_lang(::org::baeldung::grpc::HelloRequest_Language value) {
+  
+  lang_ = value;
+}
+inline void HelloRequest::set_lang(::org::baeldung::grpc::HelloRequest_Language value) {
+  _internal_set_lang(value);
+  // @@protoc_insertion_point(field_set:org.baeldung.grpc.HelloRequest.lang)
+}
+
 // -------------------------------------------------------------------
 
 // HelloResponse
@@ -676,6 +766,16 @@ inline void HelloResponse::unsafe_arena_set_allocated_greeting(
 }  // namespace grpc
 }  // namespace baeldung
 }  // namespace org
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::org::baeldung::grpc::HelloRequest_Language> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::org::baeldung::grpc::HelloRequest_Language>() {
+  return ::org::baeldung::grpc::HelloRequest_Language_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

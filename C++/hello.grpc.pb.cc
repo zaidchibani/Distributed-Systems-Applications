@@ -25,6 +25,7 @@ namespace grpc {
 
 static const char* HelloService_method_names[] = {
   "/org.baeldung.grpc.HelloService/hello",
+  "/org.baeldung.grpc.HelloService/helloStream",
 };
 
 std::unique_ptr< HelloService::Stub> HelloService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -35,6 +36,7 @@ std::unique_ptr< HelloService::Stub> HelloService::NewStub(const std::shared_ptr
 
 HelloService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
   : channel_(channel), rpcmethod_hello_(HelloService_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_helloStream_(HelloService_method_names[1], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::Status HelloService::Stub::hello(::grpc::ClientContext* context, const ::org::baeldung::grpc::HelloRequest& request, ::org::baeldung::grpc::HelloResponse* response) {
@@ -65,6 +67,22 @@ void HelloService::Stub::experimental_async::hello(::grpc::ClientContext* contex
   return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::org::baeldung::grpc::HelloResponse>::Create(channel_.get(), cq, rpcmethod_hello_, context, request, false);
 }
 
+::grpc::ClientReader< ::org::baeldung::grpc::HelloResponse>* HelloService::Stub::helloStreamRaw(::grpc::ClientContext* context, const ::org::baeldung::grpc::HelloRequest& request) {
+  return ::grpc_impl::internal::ClientReaderFactory< ::org::baeldung::grpc::HelloResponse>::Create(channel_.get(), rpcmethod_helloStream_, context, request);
+}
+
+void HelloService::Stub::experimental_async::helloStream(::grpc::ClientContext* context, ::org::baeldung::grpc::HelloRequest* request, ::grpc::experimental::ClientReadReactor< ::org::baeldung::grpc::HelloResponse>* reactor) {
+  ::grpc_impl::internal::ClientCallbackReaderFactory< ::org::baeldung::grpc::HelloResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_helloStream_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::org::baeldung::grpc::HelloResponse>* HelloService::Stub::AsynchelloStreamRaw(::grpc::ClientContext* context, const ::org::baeldung::grpc::HelloRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::org::baeldung::grpc::HelloResponse>::Create(channel_.get(), cq, rpcmethod_helloStream_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::org::baeldung::grpc::HelloResponse>* HelloService::Stub::PrepareAsynchelloStreamRaw(::grpc::ClientContext* context, const ::org::baeldung::grpc::HelloRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::org::baeldung::grpc::HelloResponse>::Create(channel_.get(), cq, rpcmethod_helloStream_, context, request, false, nullptr);
+}
+
 HelloService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       HelloService_method_names[0],
@@ -76,6 +94,16 @@ HelloService::Service::Service() {
              ::org::baeldung::grpc::HelloResponse* resp) {
                return service->hello(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      HelloService_method_names[1],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< HelloService::Service, ::org::baeldung::grpc::HelloRequest, ::org::baeldung::grpc::HelloResponse>(
+          [](HelloService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::org::baeldung::grpc::HelloRequest* req,
+             ::grpc_impl::ServerWriter<::org::baeldung::grpc::HelloResponse>* writer) {
+               return service->helloStream(ctx, req, writer);
+             }, this)));
 }
 
 HelloService::Service::~Service() {
@@ -85,6 +113,13 @@ HelloService::Service::~Service() {
   (void) context;
   (void) request;
   (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status HelloService::Service::helloStream(::grpc::ServerContext* context, const ::org::baeldung::grpc::HelloRequest* request, ::grpc::ServerWriter< ::org::baeldung::grpc::HelloResponse>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

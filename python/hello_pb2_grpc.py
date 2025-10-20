@@ -39,13 +39,26 @@ class HelloServiceStub(object):
                 request_serializer=hello__pb2.HelloRequest.SerializeToString,
                 response_deserializer=hello__pb2.HelloResponse.FromString,
                 _registered_method=True)
+        self.helloStream = channel.unary_stream(
+                '/org.baeldung.grpc.HelloService/helloStream',
+                request_serializer=hello__pb2.HelloRequest.SerializeToString,
+                response_deserializer=hello__pb2.HelloResponse.FromString,
+                _registered_method=True)
 
 
 class HelloServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def hello(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Unary RPC
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def helloStream(self, request, context):
+        """Server streaming: sends multiple greeting messages
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -55,6 +68,11 @@ def add_HelloServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'hello': grpc.unary_unary_rpc_method_handler(
                     servicer.hello,
+                    request_deserializer=hello__pb2.HelloRequest.FromString,
+                    response_serializer=hello__pb2.HelloResponse.SerializeToString,
+            ),
+            'helloStream': grpc.unary_stream_rpc_method_handler(
+                    servicer.helloStream,
                     request_deserializer=hello__pb2.HelloRequest.FromString,
                     response_serializer=hello__pb2.HelloResponse.SerializeToString,
             ),
@@ -84,6 +102,33 @@ class HelloService(object):
             request,
             target,
             '/org.baeldung.grpc.HelloService/hello',
+            hello__pb2.HelloRequest.SerializeToString,
+            hello__pb2.HelloResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def helloStream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/org.baeldung.grpc.HelloService/helloStream',
             hello__pb2.HelloRequest.SerializeToString,
             hello__pb2.HelloResponse.FromString,
             options,

@@ -5,6 +5,12 @@ package org.baeldung.grpc;
 message HelloRequest {
     string firstName = 1;
     string lastName = 2;
+    enum Language {
+        EN = 0;
+        FR = 1;
+        AR = 2;
+    }
+    Language lang = 3; // Language choice
 }
 
 message HelloResponse {
@@ -12,5 +18,9 @@ message HelloResponse {
 }
 
 service HelloService {
+    // Unary RPC
     rpc hello(HelloRequest) returns (HelloResponse);
+
+    // Server streaming: sends multiple greeting messages
+    rpc helloStream(HelloRequest) returns (stream HelloResponse);
 }

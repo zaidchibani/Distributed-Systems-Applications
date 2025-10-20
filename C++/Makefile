@@ -10,7 +10,8 @@ PROTOC = /usr/bin/protoc
 GRPC_CPP_PLUGIN = grpc_cpp_plugin
 GRPC_CPP_PLUGIN_PATH ?= /usr/bin/$(GRPC_CPP_PLUGIN)
 
-PROTOS_PATH = .
+# Proto file resides one level up from this C++ directory
+PROTOS_PATH = ..
 
 vpath %.proto $(PROTOS_PATH)
 

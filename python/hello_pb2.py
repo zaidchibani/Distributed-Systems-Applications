@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bhello.proto\x12\x11org.baeldung.grpc\"3\n\x0cHelloRequest\x12\x11\n\tfirstName\x18\x01 \x01(\t\x12\x10\n\x08lastName\x18\x02 \x01(\t\"!\n\rHelloResponse\x12\x10\n\x08greeting\x18\x01 \x01(\t2Z\n\x0cHelloService\x12J\n\x05hello\x12\x1f.org.baeldung.grpc.HelloRequest\x1a .org.baeldung.grpc.HelloResponseB\x02P\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bhello.proto\x12\x11org.baeldung.grpc\"\x8f\x01\n\x0cHelloRequest\x12\x11\n\tfirstName\x18\x01 \x01(\t\x12\x10\n\x08lastName\x18\x02 \x01(\t\x12\x36\n\x04lang\x18\x03 \x01(\x0e\x32(.org.baeldung.grpc.HelloRequest.Language\"\"\n\x08Language\x12\x06\n\x02\x45N\x10\x00\x12\x06\n\x02\x46R\x10\x01\x12\x06\n\x02\x41R\x10\x02\"!\n\rHelloResponse\x12\x10\n\x08greeting\x18\x01 \x01(\t2\xae\x01\n\x0cHelloService\x12J\n\x05hello\x12\x1f.org.baeldung.grpc.HelloRequest\x1a .org.baeldung.grpc.HelloResponse\x12R\n\x0bhelloStream\x12\x1f.org.baeldung.grpc.HelloRequest\x1a .org.baeldung.grpc.HelloResponse0\x01\x42\x02P\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,10 +32,12 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'hello_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'P\001'
-  _globals['_HELLOREQUEST']._serialized_start=34
-  _globals['_HELLOREQUEST']._serialized_end=85
-  _globals['_HELLORESPONSE']._serialized_start=87
-  _globals['_HELLORESPONSE']._serialized_end=120
-  _globals['_HELLOSERVICE']._serialized_start=122
-  _globals['_HELLOSERVICE']._serialized_end=212
+  _globals['_HELLOREQUEST']._serialized_start=35
+  _globals['_HELLOREQUEST']._serialized_end=178
+  _globals['_HELLOREQUEST_LANGUAGE']._serialized_start=144
+  _globals['_HELLOREQUEST_LANGUAGE']._serialized_end=178
+  _globals['_HELLORESPONSE']._serialized_start=180
+  _globals['_HELLORESPONSE']._serialized_end=213
+  _globals['_HELLOSERVICE']._serialized_start=216
+  _globals['_HELLOSERVICE']._serialized_end=390
 # @@protoc_insertion_point(module_scope)

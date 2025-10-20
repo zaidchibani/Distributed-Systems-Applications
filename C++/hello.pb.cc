@@ -57,7 +57,7 @@ static void InitDefaultsscc_info_HelloResponse_hello_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_HelloResponse_hello_2eproto}, {}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_hello_2eproto[2];
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_hello_2eproto = nullptr;
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_hello_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_hello_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_hello_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -68,6 +68,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_hello_2eproto::offsets[] PROTO
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::org::baeldung::grpc::HelloRequest, firstname_),
   PROTOBUF_FIELD_OFFSET(::org::baeldung::grpc::HelloRequest, lastname_),
+  PROTOBUF_FIELD_OFFSET(::org::baeldung::grpc::HelloRequest, lang_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::org::baeldung::grpc::HelloResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -77,7 +78,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_hello_2eproto::offsets[] PROTO
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::org::baeldung::grpc::HelloRequest)},
-  { 7, -1, sizeof(::org::baeldung::grpc::HelloResponse)},
+  { 8, -1, sizeof(::org::baeldung::grpc::HelloResponse)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -86,12 +87,17 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_hello_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\013hello.proto\022\021org.baeldung.grpc\"3\n\014Hell"
-  "oRequest\022\021\n\tfirstName\030\001 \001(\t\022\020\n\010lastName\030"
-  "\002 \001(\t\"!\n\rHelloResponse\022\020\n\010greeting\030\001 \001(\t"
-  "2Z\n\014HelloService\022J\n\005hello\022\037.org.baeldung"
-  ".grpc.HelloRequest\032 .org.baeldung.grpc.H"
-  "elloResponseB\002P\001b\006proto3"
+  "\n\013hello.proto\022\021org.baeldung.grpc\"\217\001\n\014Hel"
+  "loRequest\022\021\n\tfirstName\030\001 \001(\t\022\020\n\010lastName"
+  "\030\002 \001(\t\0226\n\004lang\030\003 \001(\0162(.org.baeldung.grpc"
+  ".HelloRequest.Language\"\"\n\010Language\022\006\n\002EN"
+  "\020\000\022\006\n\002FR\020\001\022\006\n\002AR\020\002\"!\n\rHelloResponse\022\020\n\010g"
+  "reeting\030\001 \001(\t2\256\001\n\014HelloService\022J\n\005hello\022"
+  "\037.org.baeldung.grpc.HelloRequest\032 .org.b"
+  "aeldung.grpc.HelloResponse\022R\n\013helloStrea"
+  "m\022\037.org.baeldung.grpc.HelloRequest\032 .org"
+  ".baeldung.grpc.HelloResponse0\001B\002P\001b\006prot"
+  "o3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_hello_2eproto_deps[1] = {
 };
@@ -101,7 +107,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_hel
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_hello_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_hello_2eproto = {
-  false, false, descriptor_table_protodef_hello_2eproto, "hello.proto", 224,
+  false, false, descriptor_table_protodef_hello_2eproto, "hello.proto", 402,
   &descriptor_table_hello_2eproto_once, descriptor_table_hello_2eproto_sccs, descriptor_table_hello_2eproto_deps, 2, 0,
   schemas, file_default_instances, TableStruct_hello_2eproto::offsets,
   file_level_metadata_hello_2eproto, 2, file_level_enum_descriptors_hello_2eproto, file_level_service_descriptors_hello_2eproto,
@@ -112,6 +118,29 @@ static bool dynamic_init_dummy_hello_2eproto = (static_cast<void>(::PROTOBUF_NAM
 namespace org {
 namespace baeldung {
 namespace grpc {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* HelloRequest_Language_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_hello_2eproto);
+  return file_level_enum_descriptors_hello_2eproto[0];
+}
+bool HelloRequest_Language_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
+constexpr HelloRequest_Language HelloRequest::EN;
+constexpr HelloRequest_Language HelloRequest::FR;
+constexpr HelloRequest_Language HelloRequest::AR;
+constexpr HelloRequest_Language HelloRequest::Language_MIN;
+constexpr HelloRequest_Language HelloRequest::Language_MAX;
+constexpr int HelloRequest::Language_ARRAYSIZE;
+#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
 
 // ===================================================================
 
@@ -140,6 +169,7 @@ HelloRequest::HelloRequest(const HelloRequest& from)
     lastname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_lastname(),
       GetArena());
   }
+  lang_ = from.lang_;
   // @@protoc_insertion_point(copy_constructor:org.baeldung.grpc.HelloRequest)
 }
 
@@ -147,6 +177,7 @@ void HelloRequest::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_HelloRequest_hello_2eproto.base);
   firstname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   lastname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  lang_ = 0;
 }
 
 HelloRequest::~HelloRequest() {
@@ -184,6 +215,7 @@ void HelloRequest::Clear() {
 
   firstname_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   lastname_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  lang_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -211,6 +243,14 @@ const char* HelloRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "org.baeldung.grpc.HelloRequest.lastName"));
           CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .org.baeldung.grpc.HelloRequest.Language lang = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_lang(static_cast<::org::baeldung::grpc::HelloRequest_Language>(val));
         } else goto handle_unusual;
         continue;
       default: {
@@ -261,6 +301,13 @@ failure:
         2, this->_internal_lastname(), target);
   }
 
+  // .org.baeldung.grpc.HelloRequest.Language lang = 3;
+  if (this->lang() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      3, this->_internal_lang(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -289,6 +336,12 @@ size_t HelloRequest::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_lastname());
+  }
+
+  // .org.baeldung.grpc.HelloRequest.Language lang = 3;
+  if (this->lang() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_lang());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -328,6 +381,9 @@ void HelloRequest::MergeFrom(const HelloRequest& from) {
   if (from.lastname().size() > 0) {
     _internal_set_lastname(from._internal_lastname());
   }
+  if (from.lang() != 0) {
+    _internal_set_lang(from._internal_lang());
+  }
 }
 
 void HelloRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -353,6 +409,7 @@ void HelloRequest::InternalSwap(HelloRequest* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   firstname_.Swap(&other->firstname_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   lastname_.Swap(&other->lastname_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  swap(lang_, other->lang_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata HelloRequest::GetMetadata() const {
