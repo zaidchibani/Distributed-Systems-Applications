@@ -1,13 +1,13 @@
 # Distributed Systems Applications - gRPC HelloWorld
 
-A cross-language gRPC application demonstrating communication between Python and C++ services with multi-language support (English, French, Arabic).
+A cross-language gRPC application demonstrating communication between Python, C++, and Java services with multi-language support (English, French, Arabic).
 
 ## 📋 Overview
 
 This project implements a gRPC-based "HelloWorld" service with:
 - **Multi-language support**: English (EN), French (FR), and Arabic (AR)
 - **Two RPC types**: Unary RPC and Server Streaming RPC
-- **Cross-language compatibility**: Python and C++ implementations that can communicate with each other
+- **Cross-language compatibility**: Python, C++, and Java implementations that can communicate with each other
 - **Remote connectivity**: Clients can connect to remote servers across networks
 
 ## 🏗️ Architecture
@@ -24,6 +24,13 @@ This project implements a gRPC-based "HelloWorld" service with:
         ▼                                          │
 ┌─────────────────┐         gRPC          ┌─────────────────┐
 │   C++ Client    │ ◄──────────────────► │   C++ Server    │
+└─────────────────┘                       └─────────────────┘
+        │                                          ▲
+        │                                          │
+        │                                          │
+        ▼                                          │
+┌─────────────────┐         gRPC          ┌─────────────────┐
+│   Java Client   │ ◄──────────────────► │   Java Server   │
 └─────────────────┘                       └─────────────────┘
 ```
 
@@ -48,6 +55,21 @@ Distributed-Systems-Applications/
 │   ├── Makefile            # Build script for C++
 │   ├── hello_server        # Compiled server executable
 │   └── hello_client        # Compiled client executable
+├── java/
+│   ├── pom.xml             # Maven build configuration
+│   ├── build.sh            # Build script
+│   ├── run-server.sh       # Server run script
+│   ├── run-client.sh       # Client run script
+│   ├── src/
+│   │   └── main/
+│   │       └── java/
+│   │           └── org/
+│   │               └── baeldung/
+│   │                   └── grpc/
+│   │                       ├── HelloServer.java   # Java gRPC server
+│   │                       └── HelloClient.java   # Java gRPC client
+│   └── target/             # Build output (generated)
+│       └── grpc-hello-world-1.0-SNAPSHOT-jar-with-dependencies.jar
 └── README.md               # This file
 ```
 
@@ -61,6 +83,10 @@ Distributed-Systems-Applications/
 - g++ compiler with C++11 support or higher
 - gRPC C++ libraries
 - Protocol Buffers compiler (protoc)
+
+### For Java:
+- Java 11 or higher
+- Maven 3.6 or higher
 
 ## 📦 Installation
 
@@ -93,6 +119,22 @@ cd C++
 make
 ```
 
+### Java Setup
+
+1. Install Java and Maven:
+```bash
+# On Ubuntu/Debian
+sudo apt-get install -y openjdk-11-jdk maven
+```
+
+2. Build the Java project:
+```bash
+cd java
+./build.sh
+# or manually:
+mvn clean compile package
+```
+
 ## 🚀 Usage
 
 ### Running Servers
@@ -119,6 +161,28 @@ cd C++
 The server will start on `0.0.0.0:50051` and display:
 ```
 Server listening on 0.0.0.0:50051
+```
+
+#### Java Server
+
+1. Build the Java project first:
+```bash
+cd java
+mvn clean compile package
+# or use the build script:
+./build.sh
+```
+
+2. Start the server:
+```bash
+java -cp target/grpc-hello-world-1.0-SNAPSHOT-jar-with-dependencies.jar org.baeldung.grpc.HelloServer
+# or use the run script:
+./run-server.sh
+```
+
+The server will start on `0.0.0.0:50051` and display:
+```
+INFO: Server started, listening on 50051
 ```
 
 ### Running Clients
@@ -187,6 +251,42 @@ cd C++
 ./hello_client zaid chibani fr 192.168.1.100:50051
 ```
 
+#### Java Client
+
+**Build and run:**
+```bash
+cd java
+mvn clean compile package  # or use ./build.sh
+```
+
+**Local connection:**
+```bash
+java -cp target/grpc-hello-world-1.0-SNAPSHOT-jar-with-dependencies.jar org.baeldung.grpc.HelloClient <first_name> <last_name> <language>
+```
+
+**Remote connection:**
+```bash
+java -cp target/grpc-hello-world-1.0-SNAPSHOT-jar-with-dependencies.jar org.baeldung.grpc.HelloClient <first_name> <last_name> <language> --target <server_ip>:50051
+```
+
+**Examples:**
+```bash
+# English greeting
+java -cp target/grpc-hello-world-1.0-SNAPSHOT-jar-with-dependencies.jar org.baeldung.grpc.HelloClient zaid chibani en
+# Output: INFO: Greeting: Hello zaid chibani
+
+# French greeting
+java -cp target/grpc-hello-world-1.0-SNAPSHOT-jar-with-dependencies.jar org.baeldung.grpc.HelloClient zaid chibani fr
+# Output: INFO: Greeting: Bonjour zaid chibani
+
+# Arabic greeting
+java -cp target/grpc-hello-world-1.0-SNAPSHOT-jar-with-dependencies.jar org.baeldung.grpc.HelloClient zaid chibani ar
+# Output: INFO: Greeting: مرحبا zaid chibani
+
+# Connect to remote server
+java -cp target/grpc-hello-world-1.0-SNAPSHOT-jar-with-dependencies.jar org.baeldung.grpc.HelloClient zaid chibani fr --target 192.168.1.100:50051
+```
+
 ### Language Codes
 
 - `en` - English
@@ -220,6 +320,34 @@ cd python
 cd C++
 ./hello_client zaid chibani fr
 ```
+
+### Java Client → Python Server
+```bash
+# Terminal 1 (Start Python server)
+cd python
+./server.py
+
+# Terminal 2 (Run Java client)
+cd java
+./run-client.sh zaid chibani fr
+```
+
+### Python Client → Java Server
+```bash
+# Terminal 1 (Start Java server)
+cd java
+./run-server.sh
+
+# Terminal 2 (Run Python client)
+cd python
+./client.py zaid chibani fr
+```
+
+### Any Client → Any Server
+All combinations work seamlessly:
+- Python Client ↔ Python/C++/Java Server
+- C++ Client ↔ Python/C++/Java Server
+- Java Client ↔ Python/C++/Java Server
 
 ## 🌐 Remote Server Connection
 
