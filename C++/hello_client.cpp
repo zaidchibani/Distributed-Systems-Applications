@@ -76,8 +76,7 @@ int main(int argc, char** argv) {
     std::string server_address("localhost:50051");
     HelloClient client(grpc::CreateChannel(server_address, grpc::InsecureChannelCredentials()));
     
-    std::string firstName = "John";
-    std::string lastName = "Doe";
+    std::string firstName, lastName;
     HelloRequest::Language lang = HelloRequest::EN;
 
     // Parse args where the last token can be a language code (en|fr|ar), and the rest are name tokens
@@ -88,6 +87,8 @@ int main(int argc, char** argv) {
         auto is_lang = [](const std::string& s){
             return s == "en" || s == "EN" || s == "fr" || s == "FR" || s == "ar" || s == "AR";
         };
+        
+        // Check if the last token is a language code
         if (!tokens.empty() && is_lang(tokens.back())) {
             std::string l = tokens.back();
             tokens.pop_back();
@@ -96,6 +97,7 @@ int main(int argc, char** argv) {
             else lang = HelloRequest::EN;
         }
 
+        // Process remaining tokens as name parts
         if (!tokens.empty()) {
             firstName = tokens.front();
             if (tokens.size() > 1) {
@@ -106,9 +108,31 @@ int main(int argc, char** argv) {
                 }
                 lastName = rest;
             } else {
-                lastName.clear();
+                lastName = ""; // Clear last name if only first name provided
             }
+        } else {
+            // If all tokens were consumed (only language was provided), prompt for names
+            std::cout << "Please enter your first name: ";
+            std::getline(std::cin, firstName);
+            
+            std::cout << "Please enter your last name: ";
+            std::getline(std::cin, lastName);
         }
+    } else {
+        // Interactive mode when no arguments provided
+        std::cout << "Please enter your first name: ";
+        std::getline(std::cin, firstName);
+        
+        std::cout << "Please enter your last name: ";
+        std::getline(std::cin, lastName);
+        
+        std::cout << "Please select language (en/fr/ar) [default: en]: ";
+        std::string langInput;
+        std::getline(std::cin, langInput);
+        
+        if (langInput == "fr" || langInput == "FR") lang = HelloRequest::FR;
+        else if (langInput == "ar" || langInput == "AR") lang = HelloRequest::AR;
+        else lang = HelloRequest::EN; // default
     }
     
     std::string response = client.SayHello(firstName, lastName, lang);

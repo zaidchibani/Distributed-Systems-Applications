@@ -17,30 +17,10 @@ class HelloServiceImpl final : public HelloService::Service {
     Status hello(ServerContext* context, const HelloRequest* request,
                 HelloResponse* response) override {
         
-        std::string greeting;
-        std::string fullName = request->firstname();
-        if (!request->lastname().empty()) {
-            fullName += " " + request->lastname();
-        }
-        
-        // Generate greeting based on language
-        switch (request->lang()) {
-            case HelloRequest::FR:
-                greeting = "Bonjour, " + fullName + "!";
-                break;
-            case HelloRequest::AR:
-                greeting = "مرحبا، " + fullName + "!";
-                break;
-            case HelloRequest::EN:
-            default:
-                greeting = "Hello, " + fullName + "!";
-                break;
-        }
-        
+        std::string greeting = "Hello, " + request->firstname() + " " + request->lastname() + "!";
         response->set_greeting(greeting);
         
-        std::cout << "Server received: " << request->firstname() << " " << request->lastname() 
-                  << " (lang: " << request->lang() << ")" << std::endl;
+        std::cout << "Server received: " << request->firstname() << " " << request->lastname() << std::endl;
         std::cout << "Server responding: " << greeting << std::endl;
         
         return Status::OK;
