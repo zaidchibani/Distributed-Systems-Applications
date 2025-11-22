@@ -484,8 +484,8 @@ This project is open source and available for educational purposes.
 
 **Zaid Chibani**
 - GitHub: [@zaidchibani](https://github.com/zaidchibani)
--         wejden Abdelmoumen
--         Mohamed Anas Rejeb
+**wejden Abdelmoumen**
+**Mohamed Anas Rejeb**
 - Repository: [Distributed-Systems-Applications](https://github.com/zaidchibani/Distributed-Systems-Applications)
 
 ---
